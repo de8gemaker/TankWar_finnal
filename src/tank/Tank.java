@@ -5,23 +5,21 @@ import java.awt.image.ImageObserver;
 import java.util.Random;
 
 public class Tank {
-    private static final int SPEED = 1;
+    private static final int SPEED = 2;
 	public static final int WIDTH = ResourceMgr.goodtankD.getWidth();
 	public static final int HEIGHT = ResourceMgr.goodtankD.getHeight();
-	private int x;
-
-    private int y;
+	private int x,y;
 
     private boolean moving = true;
+
     private TankFrame tf = null;
     private Dir dir = Dir.DOWN;
 	private boolean living = true;
 	private Random random = new Random();
 	Rectangle rect = new Rectangle();
 
-
-
-    private Group group = Group.BAD;
+	private Group group = Group.BAD;
+    FireStrategy fs;
 
 	//------------------------------------------------------------------------------------
     public Group getGroup() { return group; }
@@ -54,6 +52,8 @@ public class Tank {
         this.dir = dir;
     }
 
+    public TankFrame getTf() { return tf; }
+
     public Tank(int x, int y, Dir dir, Group group , TankFrame tf) {
         super();
         this.x = x;
@@ -66,18 +66,28 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        //将FireStrategyGood的load到内存
+        if(group == Group.GOOD) {
+            String goodFsName = (String) PropertyMgr.get("goodFs");
+            try {
+                fs = (FireStrategy) Class.forName(goodFsName).newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            fs = new DefaultFireStrategy();
+        }
     }
     //----------------------------------------------------------------------------------
 
     public void paint(Graphics g) {
         if(!living) tf.tanks.remove(this);
-
-//        Color c = g.getColor();
-//        g.setColor(Color.BLACK);
-//        g.fillRect(x,y,50,50);
-//        g.setColor(c);
-
-
 
         switch (dir) {
             case LEFT: g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodtankL : ResourceMgr.badtankL,x,y,null);
@@ -139,10 +149,12 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
-        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-
-		tf.bullets.add( new Bullet(bX,bY,this.dir,this.group,this.tf));
+        fs.fire(this);
+//        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+//        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
+//
+//        tf.bullets.add( new Bullet(bX,bY,this.dir,this.group,this.tf));
+//        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav")).start();
     }
 
     public void die() {

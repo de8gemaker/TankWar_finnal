@@ -23,7 +23,7 @@ public class ResourceMgr {
             badtankR = ImageUtil.rotateImage(badtankU,90);
             badtankD = ImageUtil.rotateImage(badtankU,180);
 
-            bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
+            bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.png"));
             bulletL = ImageUtil.rotateImage(bulletU,-90);
             bulletR = ImageUtil.rotateImage(bulletU,90);
             bulletD = ImageUtil.rotateImage(bulletU,180);
