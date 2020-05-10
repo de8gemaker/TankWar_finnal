@@ -1,0 +1,24 @@
+Index: src/tank/Tank.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/tank/Tank.java	(date 1589115522000)
++++ src/tank/Tank.java	(date 1589115631787)
+@@ -80,8 +80,6 @@
+ 		this.living = false;
+ 	}
+ 
+-
+-
+ 	public void fire() {
+ 		fs.fire(this);
+ 	}
+@@ -169,7 +167,6 @@
+ 			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+ 			break;
+ 		}
+-
+ 		move();
+ 
+ 	}

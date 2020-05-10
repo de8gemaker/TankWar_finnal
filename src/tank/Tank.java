@@ -80,8 +80,6 @@ public class Tank extends GameObject {
 		this.living = false;
 	}
 
-
-
 	public void fire() {
 		fs.fire(this);
 	}
@@ -169,7 +167,6 @@ public class Tank extends GameObject {
 			g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
 			break;
 		}
-
 		move();
 
 	}
