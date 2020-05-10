@@ -22,7 +22,6 @@ public class BulletTankCollider implements Collider {
 				new Explode(eX, eY);
 				return false;
 			}
-			
 		} else if (o1 instanceof Tank && o2 instanceof Bullet) {
 			return collide(o2, o1);
 		} 
