@@ -2,6 +2,7 @@
   <dictionary name="CED">
     <words>
       <w>badtank</w>
+      <w>collider</w>
       <w>goodtank</w>
     </words>
   </dictionary>
